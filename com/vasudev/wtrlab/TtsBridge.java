@@ -838,6 +838,16 @@ public final class TtsBridge {
     }
 
     public final String getVoicesJson() {
+        // engine not ready - bring it back so the list is not just a placeholder
+        try {
+            if (!this.engineReady || this.tts == null) {
+                try {
+                    restartEngine(getEnginePackage());
+                } catch (Exception ignored) {
+                }
+            }
+        } catch (Exception ignored) {
+        }
         boolean z;
         TtsBridge ttsBridge = this;
         try {

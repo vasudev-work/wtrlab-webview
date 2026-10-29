@@ -967,6 +967,17 @@ public class SettingsPanel {
         }
         LinearLayout vrow = chipRow();
         vrow.addView(chip(curVoice.length() == 0 ? "Choose voice" : curVoice, false, true, v -> showReadVoiceDialog()));
+        vrow.addView(chip("Refresh voices", false, true, v -> {
+            try {
+                com.vasudev.wtrlab.TtsBridge b =
+                        com.vasudev.wtrlab.TtsBridge.INSTANCE.getInstance();
+                if (b != null) {
+                    b.restartEngine(b.getEnginePackage());
+                }
+            } catch (Exception ignored) {
+            }
+            toast("TTS engine restart - 2 second baad voice chuno");
+        }));
         card.addView(wrapRow(vrow));
 
         card.addView(label("SPEED"));
